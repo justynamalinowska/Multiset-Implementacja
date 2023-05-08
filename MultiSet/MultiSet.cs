@@ -11,12 +11,11 @@ namespace MultiSet
 {
 	public class MultiSet<T> : ICollection<T>
 	{
-		public MultiSet()
-		{
-		}
-
         private Dictionary<T, int> mset = new Dictionary<T, int>();
 
+        public MultiSet()
+		{
+		}
         public int Count => throw new NotImplementedException();
 
         public bool IsReadOnly => false;
@@ -27,6 +26,26 @@ namespace MultiSet
 		}
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public MultiSet(IEnumerable<T> data)
+        {
+            foreach (var element in data)
+            {
+                this.Add(element);
+            }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder output = new StringBuilder();
+            foreach (var (item, multiplicity) in mset)
+            {
+                output.Append($"{item}: {multiplicity}, ");
+            }
+
+            return output.ToString(0, output.Length-2);
+        }
+
 
         public void Add(T item)
         {
@@ -48,14 +67,6 @@ namespace MultiSet
         public void CopyTo(T[] array, int arrayIndex)
         {
             throw new NotImplementedException();
-        }
-
-        public MultiSet( IEnumerable<T> data)
-        {
-			foreach (var element in data)
-			{
-				this.Add();
-			}
         }
     }
 }
