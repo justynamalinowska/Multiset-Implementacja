@@ -20,15 +20,17 @@ namespace MultiSet
 
         public bool IsReadOnly => false;
 
+        //indexder
+        //public static T operator this[int]
+
         public IEnumerator<T> GetEnumerator()
         {
             foreach (var (item, multiplicity) in mset)
             {
                 for (int i = 0; i < multiplicity; i++)
-                    yield return item;
-
-                yield break;
+                    yield return item;  
             }
+            yield break;
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
