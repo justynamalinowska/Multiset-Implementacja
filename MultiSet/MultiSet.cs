@@ -21,9 +21,15 @@ namespace MultiSet
         public bool IsReadOnly => false;
 
         public IEnumerator<T> GetEnumerator()
-		{
-			throw new NotImplementedException();
-		}
+        {
+            foreach (var (item, multiplicity) in mset)
+            {
+                for (int i = 0; i < multiplicity; i++)
+                    yield return item;
+
+                yield break;
+            }
+        }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -80,6 +86,25 @@ namespace MultiSet
         public void CopyTo(T[] array, int arrayIndex)
         {
             throw new NotImplementedException();
+        }
+
+        private class MultiSetEnumerator : IEnumerator<T>
+        {
+            public T Current => throw new NotImplementedException();
+
+            object IEnumerator.Current => Current;
+
+            public void Dispose() {}
+
+            public bool MoveNext()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Reset()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
