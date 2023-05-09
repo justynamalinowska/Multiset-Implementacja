@@ -46,6 +46,19 @@ namespace MultiSet
             return output.ToString(0, output.Length-2);
         }
 
+        public string ToStringExpanded()
+        {
+            StringBuilder output = new StringBuilder();
+            foreach (var (item, multiplicity) in mset)
+            {
+                for (int i = 0; i < multiplicity; i++)
+                {
+                    output.Append($"{item}, ");
+                }
+            }
+
+            return output.ToString(0, output.Length - 2);
+        }
 
         public void Add(T item)
         {
