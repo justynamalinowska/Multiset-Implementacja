@@ -93,7 +93,17 @@ namespace MultiSet
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            if (IsReadOnly)
+                throw new NotSupportedException();
+
+            if (!mset.ContainsKey(item))
+                return false;
+            else
+            {
+                mset.Remove(item);
+                return true;
+            }
+
         }
 
         public void Clear() => mset.Clear();
