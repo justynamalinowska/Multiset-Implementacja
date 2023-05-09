@@ -82,6 +82,9 @@ namespace MultiSet
 
         public void Add(T item)
         {
+            if (IsReadOnly)
+                throw new NotSupportedException();
+
             if (!mset.ContainsKey(item))
                 mset.Add(item, 1);
             else
