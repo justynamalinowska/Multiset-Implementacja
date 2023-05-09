@@ -1,8 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System;
+using System.Collections.Concurrent;
 
 namespace km.Collections.MultiZbior
 {
-    /// <summary>
+    /// <summary> 
     /// MultiSet, to rozszerzenie koncepcji zbioru, dopuszczające przechowywanie duplikatów elementów 
     /// </summary>
     /// <remarks>
@@ -14,9 +21,8 @@ namespace km.Collections.MultiZbior
 
     public interface IMultiSet<T> : ICollection<T>, IEnumerable<T>
     {
-
         #region === from ICollection<T> ============================================
-        /*
+        
         // opis metod wymaganych do zaimplementowania z ICollection<T>
 
         // zwraca liczbę wszystkich elementów multizbioru (łącznie z duplikatami)
@@ -44,21 +50,21 @@ namespace km.Collections.MultiZbior
         // kopiuje elementy multizbioru do tablicy, od wskazanego indeksu
         public void CopyTo (T[] array, int arrayIndex);
 
-        */
-
+        
+        
         // --- from IEnumerable<T> --------------------------
 
-        /*
+
         // zwraca iterator multizbioru (wariant generyczny)
         public IEnumerator<T> GetEnumerator();
 
         // zwraca iterator multizbioru (wariant niegeneryczny)
         // C#8 default implementation
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        */
+        
         #endregion -----------------------------------------------------------------
 
-
+        /*
         // dodaje `numberOfItems` takich samych elementów `item` do multizbioru 
         // zgłasza `NotSupportedException` jeśli multizbior jest tylko do odczytu
         // zwraca referencję tej instancji multizbioru (`this`)
@@ -147,7 +153,7 @@ namespace km.Collections.MultiZbior
         // zwraca MultiSet jako Set, usuwając duplikaty
         public IReadOnlySet<T> AsSet();
 
-
+        
         // -------------------------
         // konstruktory, metody statyczne i operatory -> do zaimplementowania (nie da się zadeklarować w interfejsie)
 
@@ -182,5 +188,6 @@ namespace km.Collections.MultiZbior
         // zwraca `ArgumentNullException`, jeśli którykolwiek z parametrów jest `null`
         public static IMultiSet<T> operator *(IMultiSet<T> first, IMultiSet<T> second);
         */
+
     }
 }
