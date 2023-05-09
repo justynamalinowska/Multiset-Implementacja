@@ -16,9 +16,21 @@ namespace MultiSet
         public MultiSet()
 		{
 		}
-        public int Count => throw new NotImplementedException();
 
         public bool IsReadOnly => false;
+
+        public int Count()
+        {
+            int counter = 0;
+            foreach (var (item, multiplicity) in mset)
+            {
+                for (int i = 0; i < multiplicity; i++)
+                    counter++;
+            }
+            return counter;
+        }
+
+        int ICollection<T>.Count => Count();
 
         //indexder
         //public static T operator this[int]
