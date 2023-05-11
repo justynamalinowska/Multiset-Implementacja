@@ -112,7 +112,19 @@ namespace MultiSet
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if (arrayIndex < 0 || arrayIndex >= array.Length)
+                throw new ArgumentOutOfRangeException();
+            if (array is null)
+                throw new ArgumentNullException();
+
+            foreach (KeyValuePair<T, int> item in mset)
+            {
+                for (int i = 0; i < item.Value; i++)
+                {
+                    array[arrayIndex + i] = item.Key;
+                }
+            }
+
         }
 
         private class MultiSetEnumerator : IEnumerator<T>
