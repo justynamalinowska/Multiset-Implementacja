@@ -103,7 +103,6 @@ namespace MultiSet
                 mset.Remove(item);
                 return true;
             }
-
         }
 
         public void Clear() => mset.Clear();
@@ -159,9 +158,18 @@ namespace MultiSet
         {
             if (IsReadOnly) throw new NotSupportedException();
             else if (!mset.ContainsKey(item)) return this;
-            for (int i = 0; i < numberOfItems; i++) mset[item] --;
+            else for (int i = 0; i < numberOfItems; i++) mset[item] --;
 
             return this;     
+        }
+
+        public MultiSet<T> RemoveAll(T item)
+        {
+            if (IsReadOnly) throw new NotSupportedException();
+            else if (!mset.ContainsKey(item)) return this;
+            else mset[item] = 0;
+
+            return this;
         }
     }
 }

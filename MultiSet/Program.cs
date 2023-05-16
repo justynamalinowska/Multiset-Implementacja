@@ -33,6 +33,9 @@ class Program
         mz.Remove('d', 2);
         Console.WriteLine(mz.ToStringExpanded());
 
+        mz.RemoveAll('d');
+        Console.WriteLine(mz.ToStringExpanded());
+
         char[] chars = new char[znaki.Length];
 
         znaki.CopyTo(chars, 0);
