@@ -15,7 +15,9 @@ class Program
     static void Main()
     {
         char[] znaki = new char[] { 'a', 'a', 'b', 'c'};
+        char[] znaki2 = new char[] { 'a', 'b', 'c', 'd', 'e' };
         var mz = new MultiSet<char>(znaki);
+        var mz2 = new MultiSet<char>(znaki2);
         Console.WriteLine(mz);
         Console.WriteLine(mz.ToStringExpanded());
 
@@ -25,6 +27,9 @@ class Program
         }
 
         Console.WriteLine(mz.Count());
+        mz.UnionWith(mz2);
+        Console.WriteLine(mz.ToStringExpanded());
+
 
         mz.Add('d', 5);
         Console.WriteLine("+5*d:");

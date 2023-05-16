@@ -171,6 +171,19 @@ namespace MultiSet
 
             return this;
         }
+
+        public MultiSet<T> UnionWith(IEnumerable<T> other)
+        {
+            if (other is null) throw new ArgumentNullException();
+            else if (IsReadOnly) throw new NotSupportedException();
+
+            foreach (var item in other)
+            {
+            if (!mset.ContainsKey(item)) mset.Add(item, 1);
+            else mset[item] ++;
+            }
+            return this;
+        }
     }
 }
 
