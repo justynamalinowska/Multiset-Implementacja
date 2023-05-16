@@ -30,6 +30,8 @@ class Program
         mz.UnionWith(mz2);
         Console.WriteLine(mz.ToStringExpanded());
 
+        mz.IntersectWith(mz2);
+        Console.WriteLine(mz.ToStringExpanded());
 
         mz.Add('d', 5);
         Console.WriteLine("+5*d:");

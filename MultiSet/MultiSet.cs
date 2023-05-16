@@ -184,6 +184,24 @@ namespace MultiSet
             }
             return this;
         }
+
+        public MultiSet<T> IntersectWith(IEnumerable<T> other) //????
+        {
+            if (other is null) throw new ArgumentNullException();
+            else if (IsReadOnly) throw new NotSupportedException();
+
+            foreach (var item in this)
+            {
+
+                if (!other.Contains(item))
+                {
+                    this.Remove(item);
+                }
+            }
+
+            return this;
+        }
+
     }
 }
 
