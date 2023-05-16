@@ -145,6 +145,24 @@ namespace MultiSet
                 throw new NotImplementedException();
             }
         }
+
+        public MultiSet<T> Add(T item, int numberOfItems = 1)
+        {
+            if (IsReadOnly) throw new NotSupportedException();
+            if (!mset.ContainsKey(item)) mset.Add(item, numberOfItems);
+            else mset[item] =+ numberOfItems;
+
+            return this;
+        }
+
+        public MultiSet<T> Remove(T item, int numberOfItems = 1)
+        {
+            if (IsReadOnly) throw new NotSupportedException();
+            else if (!mset.ContainsKey(item)) return this;
+            for (int i = 0; i < numberOfItems; i++) mset[item] --;
+
+            return this;     
+        }
     }
 }
 
