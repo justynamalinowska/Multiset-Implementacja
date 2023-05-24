@@ -78,7 +78,10 @@ namespace MultiSet
                 output.Append($"{item}: {multiplicity}, ");
             }
 
-            return output.ToString(0, output.Length-2);
+            if (output.Length > 2)
+                return output.ToString(0, output.Length - 2);
+            else
+                return output.ToString();
         }
 
         public string ToStringExpanded()
@@ -87,12 +90,13 @@ namespace MultiSet
             foreach (var (item, multiplicity) in mset)
             {
                 for (int i = 0; i < multiplicity; i++)
-                {
                     output.Append($"{item}, ");
-                }
-            }
 
-            return output.ToString(0, output.Length - 2);
+            }
+            if (output.Length > 2)
+                return output.ToString(0, output.Length - 2);
+            else
+                return output.ToString();
         }
 
         public void Add(T item)
@@ -226,16 +230,24 @@ namespace MultiSet
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
 
-            Dictionary<T, int> otherMset = new Dictionary<T, int>();
+            //Dictionary<T, int> otherMset = new Dictionary<T, int>();
 
-            foreach (T otherValue in other)
+            //foreach (T otherValue in other)
+            //{
+            //    if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
+            //    else otherMset[otherValue]++;
+            //}
+
+            //foreach (var entry in mset)
+            //    if (otherMset.ContainsKey(entry.Key)) mset[entry.Key]--;
+
+            //return this;
+
+            foreach (var item in this.IntersectWith(other))
             {
-                if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
-                else otherMset[otherValue]++;
+                if (this.Contains(item))
+                    this.Remove(item);
             }
-
-            foreach (var entry in mset)
-                if (otherMset.ContainsKey(entry.Key)) mset[entry.Key]--;
 
             return this;
         }
