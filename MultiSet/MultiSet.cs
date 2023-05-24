@@ -16,7 +16,14 @@ namespace km.Collections.MultiZbior
         private Dictionary<T, int> mset = new Dictionary<T, int>();
 
         public MultiSet()
+        { }
+
+        public MultiSet(IEnumerable<T> data)
         {
+            foreach (var element in data)
+            {
+                this.Add(element);
+            }
         }
 
         public bool IsReadOnly => false;
@@ -67,14 +74,6 @@ namespace km.Collections.MultiZbior
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        public MultiSet(IEnumerable<T> data)
-        {
-            foreach (var element in data)
-            {
-                this.Add(element);
-            }
-        }
 
         public override string ToString()
         {
@@ -319,29 +318,23 @@ namespace km.Collections.MultiZbior
         {
             if (other is null) throw new ArgumentNullException();
 
-            if (this.IsSubsetOf(other) && other.Count() > this.Count()) return true;
-
-            return false;
+            return (this.IsSubsetOf(other) && other.Count() > this.Count());
         }
 
         public bool IsSupersetOf(IEnumerable<T> other)
         {
             if (other is null) throw new ArgumentNullException();
 
-            foreach (var item in other)
-            {
-                if (!this.Contains(item))
-                    return false;
-            }
+            MultiSet<T> otherMultiSet = new MultiSet<T>(other);
 
-            return true;
+            return otherMultiSet.IsSubsetOf(this);
         }
 
         public bool IsProperSupersetOf(IEnumerable<T> other)
         {
+
+
             throw new NotImplementedException();
-
-
 
         }
 
