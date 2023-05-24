@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MultiSet
 {
@@ -190,18 +191,24 @@ namespace MultiSet
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
 
-            foreach (var item in this)
-            {
+            Dictionary<T, int> otherMset = new Dictionary<T, int>();
 
-                if (!other.Contains(item))
-                {
-                    this.Remove(item);
-                }
+            foreach (T otherValue in other)
+            {
+                if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
+                else otherMset[otherValue]++;
+            }
+
+            foreach (var entry in mset)
+            {
+                if (otherMset.ContainsKey(entry.Key))
+                    mset[entry.Key] = Math.Min(entry.Value, otherMset[entry.Key]);
+                else
+                    mset.Remove(entry.Key);
             }
 
             return this;
         }
-
     }
 }
 
