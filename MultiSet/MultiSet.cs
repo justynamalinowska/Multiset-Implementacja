@@ -201,8 +201,7 @@ namespace km.Collections.MultiZbior
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
 
-            foreach (var item in other)
-                this.Add(item);
+            foreach (var item in other) this.Add(item);
             return this;
         }
 
@@ -211,22 +210,15 @@ namespace km.Collections.MultiZbior
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
 
-            Dictionary<T, int> otherMset = new Dictionary<T, int>();
-
-            foreach (T otherValue in other)
-            {
-                if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
-                else otherMset[otherValue]++;
-            }
+            MultiSet<T> otherMset = new MultiSet<T>(other);
 
             foreach (var entry in mset)
             {
-                if (otherMset.ContainsKey(entry.Key))
-                    mset[entry.Key] = Math.Min(entry.Value, otherMset[entry.Key]);
+                if (otherMset.Contains(entry.Key))
+                    mset[entry.Key] = Math.Min(entry.Value, otherMset.mset[entry.Key]);
                 else
                     mset.Remove(entry.Key);
             }
-
             return this;
         }
 
@@ -235,26 +227,12 @@ namespace km.Collections.MultiZbior
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
 
-            Dictionary<T, int> otherMset = new Dictionary<T, int>();
-
-            foreach (T otherValue in other)
-            {
-                if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
-                else otherMset[otherValue]++;
-            }
+            MultiSet<T> otherMset = new MultiSet<T>(other);
 
             foreach (var entry in mset)
-                if (otherMset.ContainsKey(entry.Key)) mset[entry.Key]--;
+                if (otherMset.mset.ContainsKey(entry.Key)) mset[entry.Key]--;
 
             return this;
-
-            //foreach (var item in this.IntersectWith(other))
-            //{
-            //    if (this.Contains(item))
-            //        this.Remove(item);
-            //}
-
-            //return this;
         }
 
         public MultiSet<T> SymmetricExceptWith(IEnumerable<T> other)
@@ -262,24 +240,14 @@ namespace km.Collections.MultiZbior
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
 
-            Dictionary<T, int> otherMset = new Dictionary<T, int>();
+            MultiSet<T> otherMset = new MultiSet<T>(other);
 
-            foreach (T otherValue in other)
-            {
-                if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
-                else otherMset[otherValue]++;
-            }
-
-            foreach (var entry in mset)
-                if (otherMset.ContainsKey(entry.Key)) mset[entry.Key]--;
-
-            foreach (var entry in otherMset)
-                if (mset.ContainsKey(entry.Key)) otherMset[entry.Key]--;
-
+            this.ExceptWith(other);
+            otherMset.ExceptWith(this);
 
             foreach (var item in other)
                 if (!mset.ContainsKey(item)) mset.Add(item, 1);
- 
+
             return this;
         }
 
@@ -290,28 +258,7 @@ namespace km.Collections.MultiZbior
             int counter = this.Count();
             this.IntersectWith(other);
 
-            if (counter == this.Count()) return true;
-
-            return false;
-
-            //if (other is null) throw new ArgumentNullException();
-
-            //Dictionary<T, int> otherMset = new Dictionary<T, int>();
-
-            //foreach (T otherValue in other)
-            //{
-            //    if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
-            //    else otherMset[otherValue]++;
-            //}
-            //int counter = 0;
-
-            //foreach (var entry in otherMset)
-            //{
-            //    if (mset.ContainsKey(entry.Key)) counter++;
-            //}
-
-            //if (mset.Count() == counter) return true;
-            //return false;
+            return (counter == this.Count());
         }
 
         public bool IsProperSubsetOf(IEnumerable<T> other)
