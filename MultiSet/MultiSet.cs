@@ -242,11 +242,16 @@ namespace MultiSet
 
         public MultiSet<T> SymmetricExceptWith(IEnumerable<T> other)
         {
+            if (other is null) throw new ArgumentNullException();
+            else if (IsReadOnly) throw new NotSupportedException();
+
             Dictionary<T, int> otherMset = new Dictionary<T, int>();
 
             foreach (T otherValue in other)
+            {
                 if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
                 else otherMset[otherValue]++;
+            }
 
             foreach (var entry in mset)
                 if (otherMset.ContainsKey(entry.Key)) mset[entry.Key]--;
@@ -258,8 +263,29 @@ namespace MultiSet
             foreach (var item in other)
                 if (!mset.ContainsKey(item)) mset.Add(item, 1);
  
-
             return this;
+        }
+
+        public bool IsSubsetOf(IEnumerable<T> other)
+        {
+            if (other is null) throw new ArgumentNullException();
+
+            Dictionary<T, int> otherMset = new Dictionary<T, int>();
+
+            foreach (T otherValue in other)
+            {
+                if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
+                else otherMset[otherValue]++;
+            }
+            int counter = 0;
+
+            foreach (var entry in otherMset)
+            {
+                if (mset.ContainsKey(entry.Key)) counter++;
+            }
+
+            if(mset.Count() == counter) return true;
+            return false;
         }
     }
 }
