@@ -230,26 +230,26 @@ namespace MultiSet
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
 
-            //Dictionary<T, int> otherMset = new Dictionary<T, int>();
+            Dictionary<T, int> otherMset = new Dictionary<T, int>();
 
-            //foreach (T otherValue in other)
-            //{
-            //    if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
-            //    else otherMset[otherValue]++;
-            //}
-
-            //foreach (var entry in mset)
-            //    if (otherMset.ContainsKey(entry.Key)) mset[entry.Key]--;
-
-            //return this;
-
-            foreach (var item in this.IntersectWith(other))
+            foreach (T otherValue in other)
             {
-                if (this.Contains(item))
-                    this.Remove(item);
+                if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
+                else otherMset[otherValue]++;
             }
 
+            foreach (var entry in mset)
+                if (otherMset.ContainsKey(entry.Key)) mset[entry.Key]--;
+
             return this;
+
+            //foreach (var item in this.IntersectWith(other))
+            //{
+            //    if (this.Contains(item))
+            //        this.Remove(item);
+            //}
+
+            //return this;
         }
 
         public MultiSet<T> SymmetricExceptWith(IEnumerable<T> other)
