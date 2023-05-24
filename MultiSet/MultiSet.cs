@@ -313,7 +313,19 @@ namespace km.Collections.MultiZbior
             return counter == this.Count();
         }
 
-        public int this[T item] { get => mset[item]; } 
+        public int this[T item] { get => mset[item]; }
+
+        public IReadOnlyDictionary<T, int> AsDictionary()
+        {
+            Dictionary<T, int> mSetDictionary = new Dictionary<T, int>();
+
+            foreach (T entry in this)
+            {
+                if (!mSetDictionary.ContainsKey(entry)) mSetDictionary.Add(entry, 1);
+                else mSetDictionary[entry]++;
+            }
+            return mSetDictionary;
+        }
 
     }
 }
