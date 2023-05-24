@@ -44,7 +44,7 @@ namespace km.Collections.MultiZbior
 
         int IMultiSet<T>.Count => throw new NotImplementedException();
 
-        public bool IsEmpty => throw new NotImplementedException();
+        public bool IsEmpty { get => this.Count() == 0; }
 
         public IEqualityComparer<T> Comparer => throw new NotImplementedException();
 
@@ -312,6 +312,9 @@ namespace km.Collections.MultiZbior
             }
             return counter == this.Count();
         }
+
+        
+        
     }
 }
 
