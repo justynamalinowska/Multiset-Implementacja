@@ -42,11 +42,11 @@ namespace km.Collections.MultiZbior
 
         int ICollection<T>.Count => Count();
 
-        int IMultiSet<T>.Count => throw new NotImplementedException();
+        int IMultiSet<T>.Count => Count();
 
         public bool IsEmpty { get => this.Count() == 0; }
-
-        public IEqualityComparer<T> Comparer => throw new NotImplementedException();
+         
+        public IEqualityComparer<T> Comparer => throw new NotImplementedException();// ????
 
         //indexder
         //private T[] arr = new T[100];
@@ -313,8 +313,8 @@ namespace km.Collections.MultiZbior
             return counter == this.Count();
         }
 
-        
-        
+        public int this[T item] { get => mset[item]; } 
+
     }
 }
 
