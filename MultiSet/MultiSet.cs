@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Diagnostics.Metrics;
 
-namespace MultiSet
+namespace km.Collections.MultiZbior
 {
-    public class MultiSet<T> : ICollection<T>
+    public class MultiSet<T> : ICollection<T>, IMultiSet<T>
     {
         private Dictionary<T, int> mset = new Dictionary<T, int>();
 
@@ -33,6 +33,12 @@ namespace MultiSet
         }
 
         int ICollection<T>.Count => Count();
+
+        int IMultiSet<T>.Count => throw new NotImplementedException();
+
+        public bool IsEmpty => throw new NotImplementedException();
+
+        public IEqualityComparer<T> Comparer => throw new NotImplementedException();
 
         //indexder
         //private T[] arr = new T[100];
@@ -329,6 +335,24 @@ namespace MultiSet
             }
 
             return true;
+        }
+
+        public bool IsProperSupersetOf(IEnumerable<T> other)
+        {
+            throw new NotImplementedException();
+
+
+
+        }
+
+        public bool Overlaps(IEnumerable<T> other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MultiSetEquals(IEnumerable<T> other)
+        {
+            throw new NotImplementedException();
         }
     }
 }
