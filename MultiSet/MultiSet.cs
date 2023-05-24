@@ -288,6 +288,25 @@ namespace MultiSet
             if (counter == this.Count()) return true;
 
             return false;
+
+            //if (other is null) throw new ArgumentNullException();
+
+            //Dictionary<T, int> otherMset = new Dictionary<T, int>();
+
+            //foreach (T otherValue in other)
+            //{
+            //    if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
+            //    else otherMset[otherValue]++;
+            //}
+            //int counter = 0;
+
+            //foreach (var entry in otherMset)
+            //{
+            //    if (mset.ContainsKey(entry.Key)) counter++;
+            //}
+
+            //if (mset.Count() == counter) return true;
+            //return false;
         }
 
         public bool IsProperSubsetOf(IEnumerable<T> other)
@@ -297,6 +316,19 @@ namespace MultiSet
             if (this.IsSubsetOf(other) && other.Count() > this.Count()) return true;
 
             return false;
+        }
+
+        public bool IsSupersetOf(IEnumerable<T> other)
+        {
+            if (other is null) throw new ArgumentNullException();
+
+            foreach (var item in other)
+            {
+                if (!this.Contains(item))
+                    return false;
+            }
+
+            return true;
         }
     }
 }
