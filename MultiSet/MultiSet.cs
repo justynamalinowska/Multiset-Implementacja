@@ -209,6 +209,27 @@ namespace MultiSet
 
             return this;
         }
+
+        public MultiSet<T> ExceptWith(IEnumerable<T> other)
+        {
+            if (other is null) throw new ArgumentNullException();
+            else if (IsReadOnly) throw new NotSupportedException();
+
+            Dictionary<T, int> otherMset = new Dictionary<T, int>();
+
+            foreach (T otherValue in other)
+            {
+                if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
+                else otherMset[otherValue]++;
+            }
+
+            foreach (var entry in mset)
+            {
+                if (otherMset.ContainsKey(entry.Key)) mset[entry.Key]--;
+            }
+
+            return this;
+        }
     }
 }
 
