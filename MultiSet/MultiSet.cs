@@ -270,21 +270,20 @@ namespace MultiSet
         {
             if (other is null) throw new ArgumentNullException();
 
-            Dictionary<T, int> otherMset = new Dictionary<T, int>();
+            int counter = this.Count();
+            this.IntersectWith(other);
 
-            foreach (T otherValue in other)
-            {
-                if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
-                else otherMset[otherValue]++;
-            }
-            int counter = 0;
+            if (counter == this.Count()) return true;
 
-            foreach (var entry in otherMset)
-            {
-                if (mset.ContainsKey(entry.Key)) counter++;
-            }
+            return false;
+        }
 
-            if(mset.Count() == counter) return true;
+        public bool IsProperSubsetOf(IEnumerable<T> other)
+        {
+            if (other is null) throw new ArgumentNullException();
+
+            if (this.IsSubsetOf(other) && other.Count() > this.Count()) return true;
+
             return false;
         }
     }
