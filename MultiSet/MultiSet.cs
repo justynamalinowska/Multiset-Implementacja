@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Diagnostics.Metrics;
+using System.Reflection;
 
 namespace km.Collections.MultiZbior
 {
@@ -297,7 +298,19 @@ namespace km.Collections.MultiZbior
         public bool MultiSetEquals(IEnumerable<T> other)
         {
             if (other is null) throw new ArgumentNullException();
-            throw new NotImplementedException();
+
+            MultiSet<T> otherMultiSet = new MultiSet<T>(other);
+
+            int counter = 0;
+            if (this.Count() == other.Count())
+            { 
+                foreach (var entry in this)
+                {
+                    if (other.Contains(entry))
+                        counter++;
+                }
+            }
+            return counter == this.Count();
         }
     }
 }
