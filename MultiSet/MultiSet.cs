@@ -279,9 +279,9 @@ namespace km.Collections.MultiZbior
 
         public bool IsProperSupersetOf(IEnumerable<T> other)
         {
+            MultiSet<T> otherMultiSet = new MultiSet<T>(other);
 
-
-            throw new NotImplementedException();
+            return (otherMultiSet.IsSubsetOf(this) && other.Count() < this.Count());
 
         }
 
