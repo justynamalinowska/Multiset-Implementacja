@@ -179,10 +179,7 @@ namespace MultiSet
             else if (IsReadOnly) throw new NotSupportedException();
 
             foreach (var item in other)
-            {
-            if (!mset.ContainsKey(item)) mset.Add(item, 1);
-            else mset[item] ++;
-            }
+                this.Add(item);
             return this;
         }
 
@@ -224,9 +221,29 @@ namespace MultiSet
             }
 
             foreach (var entry in mset)
-            {
                 if (otherMset.ContainsKey(entry.Key)) mset[entry.Key]--;
-            }
+
+            return this;
+        }
+
+        public MultiSet<T> SymmetricExceptWith(IEnumerable<T> other)
+        {
+            Dictionary<T, int> otherMset = new Dictionary<T, int>();
+
+            foreach (T otherValue in other)
+                if (!otherMset.ContainsKey(otherValue)) otherMset.Add(otherValue, 1);
+                else otherMset[otherValue]++;
+
+            foreach (var entry in mset)
+                if (otherMset.ContainsKey(entry.Key)) mset[entry.Key]--;
+
+            foreach (var entry in otherMset)
+                if (mset.ContainsKey(entry.Key)) otherMset[entry.Key]--;
+
+
+            foreach (var item in other)
+                if (!mset.ContainsKey(item)) mset.Add(item, 1);
+ 
 
             return this;
         }
