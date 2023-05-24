@@ -279,6 +279,7 @@ namespace km.Collections.MultiZbior
 
         public bool IsProperSupersetOf(IEnumerable<T> other)
         {
+            if (other is null) throw new ArgumentNullException();
             MultiSet<T> otherMultiSet = new MultiSet<T>(other);
 
             return (otherMultiSet.IsSubsetOf(this) && other.Count() < this.Count());
@@ -287,11 +288,15 @@ namespace km.Collections.MultiZbior
 
         public bool Overlaps(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            if (other is null) throw new ArgumentNullException();
+
+            this.IntersectWith(other);
+            return this.Count() >= 1;
         }
 
         public bool MultiSetEquals(IEnumerable<T> other)
         {
+            if (other is null) throw new ArgumentNullException();
             throw new NotImplementedException();
         }
     }
