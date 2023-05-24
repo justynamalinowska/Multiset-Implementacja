@@ -7,16 +7,17 @@ using System.Text.RegularExpressions;
 using System;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Diagnostics.Metrics;
 
 namespace MultiSet
 {
-	public class MultiSet<T> : ICollection<T>
-	{
+    public class MultiSet<T> : ICollection<T>
+    {
         private Dictionary<T, int> mset = new Dictionary<T, int>();
 
         public MultiSet()
-		{
-		}
+        {
+        }
 
         public bool IsReadOnly => false;
 
@@ -34,7 +35,20 @@ namespace MultiSet
         int ICollection<T>.Count => Count();
 
         //indexder
-        //public static T operator this[int]
+        //private T[] arr = new T[100];
+
+        //public T this[int i]
+        //{
+        //    get => arr[i];
+        //    set
+        //    {
+        //        foreach (var (item, multiplicity) in mset)
+        //        {
+        //            for (int j = 0; j < multiplicity; j++)
+        //                arr[j] = item;
+        //        }
+        //    }
+        //}
 
         public IEnumerator<T> GetEnumerator()
         {
@@ -183,7 +197,7 @@ namespace MultiSet
             return this;
         }
 
-        public MultiSet<T> IntersectWith(IEnumerable<T> other) //????
+        public MultiSet<T> IntersectWith(IEnumerable<T> other) 
         {
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
