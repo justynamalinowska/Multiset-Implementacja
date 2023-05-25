@@ -14,7 +14,7 @@ namespace km.Collections.MultiZbior
 {
     public class MultiSet<T> : ICollection<T>, IMultiSet<T>
     {
-        private Dictionary<T, int> mset = new Dictionary<T, int>();
+        public Dictionary<T, int> mset = new Dictionary<T, int>();
 
         public MultiSet() { mset = new Dictionary<T, int>(); }
 
