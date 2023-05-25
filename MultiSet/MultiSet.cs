@@ -309,7 +309,12 @@ namespace km.Collections.MultiZbior
             if (first is null || second is null) throw new ArgumentNullException();
             return first.ExceptWith(second);
         }
-        
+
+        public static MultiSet<T> operator *(MultiSet<T> first, MultiSet<T> second)
+        {
+            if (first is null || second is null) throw new ArgumentNullException();
+            return first.IntersectWith(second);
+        }
     }
 }
 
