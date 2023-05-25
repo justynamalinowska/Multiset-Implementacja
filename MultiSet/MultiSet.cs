@@ -20,10 +20,7 @@ namespace km.Collections.MultiZbior
 
         public MultiSet(IEnumerable<T> data)
         {
-            foreach (var element in data)
-            {
-                this.Add(element);
-            }
+            foreach (var element in data) { this.Add(element); }
         }
 
         public bool IsReadOnly => false;
@@ -33,8 +30,7 @@ namespace km.Collections.MultiZbior
             int counter = 0;
             foreach (var (item, multiplicity) in mset)
             {
-                for (int i = 0; i < multiplicity; i++)
-                    counter++;
+                for (int i = 0; i < multiplicity; i++) counter++;
             }
             return counter;
         }
@@ -51,8 +47,7 @@ namespace km.Collections.MultiZbior
         {
             foreach (var (item, multiplicity) in mset)
             {
-                for (int i = 0; i < multiplicity; i++)
-                    yield return item;  
+                for (int i = 0; i < multiplicity; i++) yield return item;  
             }
             yield break;
         }
@@ -62,15 +57,10 @@ namespace km.Collections.MultiZbior
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();
-            foreach (var (item, multiplicity) in mset)
-            {
-                output.Append($"{item}: {multiplicity}, ");
-            }
+            foreach (var (item, multiplicity) in mset) { output.Append($"{item}: {multiplicity}, "); }
 
-            if (output.Length > 2)
-                return output.ToString(0, output.Length - 2);
-            else
-                return output.ToString();
+            if (output.Length > 2) return output.ToString(0, output.Length - 2);
+            else return output.ToString();
         }
 
         public string ToStringExpanded()
@@ -78,34 +68,23 @@ namespace km.Collections.MultiZbior
             StringBuilder output = new StringBuilder();
             foreach (var (item, multiplicity) in mset)
             {
-                for (int i = 0; i < multiplicity; i++)
-                    output.Append($"{item}, ");
-
+                for (int i = 0; i < multiplicity; i++) output.Append($"{item}, ");
             }
-            if (output.Length > 2)
-                return output.ToString(0, output.Length - 2);
-            else
-                return output.ToString();
+            if (output.Length > 2) return output.ToString(0, output.Length - 2);
+            else return output.ToString();
         }
 
         public void Add(T item)
         {
-            if (IsReadOnly)
-                throw new NotSupportedException();
-
-            if (!mset.ContainsKey(item))
-                mset.Add(item, 1);
-            else
-                mset[item]++;
+            if (IsReadOnly) throw new NotSupportedException();
+            if (!mset.ContainsKey(item)) mset.Add(item, 1);
+            else mset[item]++;
         }
 
         public bool Remove(T item)
         {
-            if (IsReadOnly)
-                throw new NotSupportedException();
-
-            if (!mset.ContainsKey(item))
-                return false;
+            if (IsReadOnly) throw new NotSupportedException();
+            if (!mset.ContainsKey(item)) return false;
             else
             {
                 mset.Remove(item);
@@ -126,12 +105,8 @@ namespace km.Collections.MultiZbior
 
             foreach (KeyValuePair<T, int> item in mset)
             {
-                for (int i = 0; i < item.Value; i++)
-                {
-                    array[arrayIndex + i] = item.Key;
-                }
+                for (int i = 0; i < item.Value; i++) { array[arrayIndex + i] = item.Key; }
             }
-
         }
 
         private class MultiSetEnumerator : IEnumerator<T>
@@ -193,7 +168,6 @@ namespace km.Collections.MultiZbior
         {
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
-
             MultiSet<T> otherMset = new MultiSet<T>(other);
 
             foreach (var entry in mset)
@@ -210,9 +184,7 @@ namespace km.Collections.MultiZbior
         {
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
-
             MultiSet<T> otherMset = new MultiSet<T>(other);
-
             foreach (var entry in mset)
                 if (otherMset.mset.ContainsKey(entry.Key)) mset[entry.Key]--;
 
@@ -223,7 +195,6 @@ namespace km.Collections.MultiZbior
         {
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
-
             MultiSet<T> otherMset = new MultiSet<T>(other);
 
             this.ExceptWith(other);
@@ -238,7 +209,6 @@ namespace km.Collections.MultiZbior
         public bool IsSubsetOf(IEnumerable<T> other)
         {
             if (other is null) throw new ArgumentNullException();
-
             int counter = this.Count();
             this.IntersectWith(other);
 
@@ -248,16 +218,13 @@ namespace km.Collections.MultiZbior
         public bool IsProperSubsetOf(IEnumerable<T> other)
         {
             if (other is null) throw new ArgumentNullException();
-
             return (this.IsSubsetOf(other) && other.Count() > this.Count());
         }
 
         public bool IsSupersetOf(IEnumerable<T> other)
         {
             if (other is null) throw new ArgumentNullException();
-
             MultiSet<T> otherMultiSet = new MultiSet<T>(other);
-
             return otherMultiSet.IsSubsetOf(this);
         }
 
@@ -265,7 +232,6 @@ namespace km.Collections.MultiZbior
         {
             if (other is null) throw new ArgumentNullException();
             MultiSet<T> otherMultiSet = new MultiSet<T>(other);
-
             return (otherMultiSet.IsSubsetOf(this) && other.Count() < this.Count());
 
         }
@@ -273,7 +239,6 @@ namespace km.Collections.MultiZbior
         public bool Overlaps(IEnumerable<T> other)
         {
             if (other is null) throw new ArgumentNullException();
-
             this.IntersectWith(other);
             return this.Count() >= 1;
         }
@@ -281,7 +246,6 @@ namespace km.Collections.MultiZbior
         public bool MultiSetEquals(IEnumerable<T> other)
         {
             if (other is null) throw new ArgumentNullException();
-
             MultiSet<T> otherMultiSet = new MultiSet<T>(other);
 
             int counter = 0;
@@ -289,8 +253,7 @@ namespace km.Collections.MultiZbior
             { 
                 foreach (var entry in this)
                 {
-                    if (other.Contains(entry))
-                        counter++;
+                    if (other.Contains(entry)) counter++;
                 }
             }
             return counter == this.Count();
@@ -298,10 +261,11 @@ namespace km.Collections.MultiZbior
 
         public int this[T item]
         {
-
-            get {
+            get
+            {
                 if (!this.Contains(item)) return 0;
-                return mset[item]; }
+                return mset[item];
+            }
         }
 
         public IReadOnlyDictionary<T, int> AsDictionary()
@@ -324,16 +288,10 @@ namespace km.Collections.MultiZbior
             return msSortedset;
         }
 
-        public static IMultiSet<T> Empty
-        {
-            get => new MultiSet<T>();
-        }
+        public static IMultiSet<T> Empty { get => new MultiSet<T>(); }
 
-        public MultiSet(IEqualityComparer<T> comparer)
-        {
+        public MultiSet(IEqualityComparer<T> comparer) { MultiSet<T> mset = new MultiSet<T>(comparer); }
 
-
-        }
     }
 }
 
