@@ -335,6 +335,10 @@ namespace km.Collections.MultiZbior
             return msSortedset;
         }
 
+        public static IMultiSet<T> Empty
+        {
+            get => new MultiSet<T>();
+        }
     }
 }
 
