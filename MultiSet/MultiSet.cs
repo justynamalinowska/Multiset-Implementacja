@@ -329,9 +329,12 @@ namespace km.Collections.MultiZbior
 
         public IReadOnlySet<T> AsSet()
         {
-            HashSet<T> msSortedset = new HashSet<T>(mset.Keys);
+            foreach (var item in mset) mset[item.Key] = 1;
+            HashSet<T> msSortedset = new HashSet<T>(this);
+
             return msSortedset;
         }
+
     }
 }
 
