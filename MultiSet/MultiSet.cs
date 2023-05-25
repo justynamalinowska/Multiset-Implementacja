@@ -16,7 +16,7 @@ namespace km.Collections.MultiZbior
     {
         private Dictionary<T, int> mset = new Dictionary<T, int>();
 
-        public MultiSet() { }
+        public MultiSet() { mset = new Dictionary<T, int>(); }
 
         public MultiSet(IEnumerable<T> data)
         {
@@ -44,24 +44,8 @@ namespace km.Collections.MultiZbior
         int IMultiSet<T>.Count => Count();
 
         public bool IsEmpty { get => this.Count() == 0; }
-         
-        public IEqualityComparer<T> Comparer => throw new NotImplementedException();// ????
 
-        //indexder
-        //private T[] arr = new T[100];
-
-        //public T this[int i]
-        //{
-        //    get => arr[i];
-        //    set
-        //    {
-        //        foreach (var (item, multiplicity) in mset)
-        //        {
-        //            for (int j = 0; j < multiplicity; j++)
-        //                arr[j] = item;
-        //        }
-        //    }
-        //}
+        public IEqualityComparer<T> Comparer => mset.Comparer;
 
         public IEnumerator<T> GetEnumerator()
         {
@@ -312,7 +296,13 @@ namespace km.Collections.MultiZbior
             return counter == this.Count();
         }
 
-        public int this[T item] { get => mset[item]; }
+        public int this[T item]
+        {
+
+            get {
+                if (!this.Contains(item)) return 0;
+                return mset[item]; }
+        }
 
         public IReadOnlyDictionary<T, int> AsDictionary()
         {
@@ -339,6 +329,11 @@ namespace km.Collections.MultiZbior
             get => new MultiSet<T>();
         }
 
+        public MultiSet(IEqualityComparer<T> comparer)
+        {
+
+
+        }
     }
 }
 
