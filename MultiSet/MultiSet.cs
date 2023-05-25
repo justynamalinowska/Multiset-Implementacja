@@ -16,8 +16,7 @@ namespace km.Collections.MultiZbior
     {
         private Dictionary<T, int> mset = new Dictionary<T, int>();
 
-        public MultiSet()
-        { }
+        public MultiSet() { }
 
         public MultiSet(IEnumerable<T> data)
         {
@@ -339,6 +338,7 @@ namespace km.Collections.MultiZbior
         {
             get => new MultiSet<T>();
         }
+
     }
 }
 
