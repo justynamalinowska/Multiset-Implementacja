@@ -303,6 +303,13 @@ namespace km.Collections.MultiZbior
             if (first is null || second is null) throw new ArgumentNullException();
             return first.UnionWith(second);
         }
+
+        public static MultiSet<T> operator -(MultiSet<T> first, MultiSet<T> second)
+        {
+            if (first is null || second is null) throw new ArgumentNullException();
+            return first.ExceptWith(second);
+        }
+        
     }
 }
 
