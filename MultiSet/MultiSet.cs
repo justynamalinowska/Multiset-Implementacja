@@ -327,6 +327,11 @@ namespace km.Collections.MultiZbior
             return mSetDictionary;
         }
 
+        public IReadOnlySet<T> AsSet()
+        {
+            HashSet<T> msSortedset = new HashSet<T>(mset.Keys);
+            return msSortedset;
+        }
     }
 }
 
