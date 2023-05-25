@@ -292,6 +292,11 @@ namespace km.Collections.MultiZbior
 
         public MultiSet(IEqualityComparer<T> comparer) { MultiSet<T> mset = new MultiSet<T>(comparer); }
 
+        public MultiSet(IEnumerable<T> sequence, IEqualityComparer<T> comparer)
+        {
+            MultiSet<T> mset = new MultiSet<T>(comparer);
+            foreach (var item in sequence) this.Add(item);
+        }
     }
 }
 
