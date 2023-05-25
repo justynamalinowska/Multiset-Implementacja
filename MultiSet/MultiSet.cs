@@ -297,6 +297,12 @@ namespace km.Collections.MultiZbior
             MultiSet<T> mset = new MultiSet<T>(comparer);
             foreach (var item in sequence) this.Add(item);
         }
+
+        public static MultiSet<T> operator +(MultiSet<T> first, MultiSet<T> second)
+        {
+            if (first is null || second is null) throw new ArgumentNullException();
+            return first.UnionWith(second);
+        }
     }
 }
 
