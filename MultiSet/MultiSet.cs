@@ -188,14 +188,17 @@ namespace km.Collections.MultiZbior
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
             MultiSet<T> otherMset = new MultiSet<T>(other);
-            foreach (var entry in this)
+            foreach (var entry in otherMset)
             {
-                if (otherMset.Contains(entry)) mset[entry]--;
-                if (mset[entry] == 0)
-                    mset.Remove(entry);
+                if (mset.ContainsKey(entry))
+                {
+                    mset[entry] -= otherMset[entry];
+                    if (mset[entry] <= 0) mset.Remove(entry);
+                }
             }
             return this;
         }
+
 
         public MultiSet<T> SymmetricExceptWith(IEnumerable<T> other)
         {
