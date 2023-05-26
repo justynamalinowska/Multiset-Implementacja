@@ -154,9 +154,7 @@ namespace km.Collections.MultiZbior
         public MultiSet<T> RemoveAll(T item)
         {
             if (IsReadOnly) throw new NotSupportedException();
-            else if (!mset.ContainsKey(item)) return this;
-            else mset[item] = 0;
-
+            if (Contains(item)) mset.Remove(item);
             return this;
         }
 
