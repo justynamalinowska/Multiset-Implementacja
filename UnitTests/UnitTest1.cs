@@ -263,6 +263,59 @@ namespace Tests
             Assert.IsTrue(list1.MultiSetEquals(intersection));
         }
 
+        [DataTestMethod]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'b', 'c' }, new char[] { 'a' })]
+       // [DataRow(new char[] { 'a', 'a', 'b', 'c', 'd', 'd' }, new char[] { 'a', 'c', 'd' }, new char[] { 'a', 'b', 'd' })]
+        public void ExceptWithForChars(char[] list, char[] list2, char[] charsException)
+        {
+            var list1 = new MultiSet<char>(list);
+            var exc = new MultiSet<char>(charsException);
+            list1.ExceptWith(list2);
+
+            Assert.IsTrue(list1.MultiSetEquals(exc));
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "bbb" }, new string[] { "aaa", "bbb" }, new string[] { "bbb" })]
+        [DataRow(new string[] { "aaa", "aaa", "bbb", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb"})]
+        public void ExceptWithForStrings(string[] list, string[] list2, string[] stringException)
+        {
+            var list1 = new MultiSet<string>(list);
+            var exc = new MultiSet<string>(stringException);
+            list1.ExceptWith(list2);
+
+            Assert.IsTrue(list1.MultiSetEquals(exc));
+        }
+
+        [DataTestMethod]
+        [DataRow(new char[] { 'b', 'c' }, new char[] { 'a', 'b', 'c' }, new char[] { 'b', 'c' })]
+        [DataRow(new char[] { 'a', 'a', 'b', 'c', 'd', 'd' }, new char[] { 'a', 'a', 'a', 'c', 'd' }, new char[] { 'a', 'a', 'c', 'd' })]
+        public void SymmetricExceptWithForChars(char[] list, char[] list2, char[] expected)
+        {
+            var multiset1 = new MultiSet<char>(list);
+            var multiset2 = new MultiSet<char>(list2);
+            var expectedMultiset = new MultiSet<char>(expected);
+
+            multiset1.SymmetricExceptWith(multiset2);
+
+            Assert.IsTrue(multiset1.MultiSetEquals(expectedMultiset));
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "bbb" }, new string[] { "aaa", "bbb" }, new string[] { "aaa", "bbb" })]
+        [DataRow(new string[] { "aaa", "aaa", "bbb", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" })]
+        public void SymmetricExceptWithForStrings(string[] list, string[] list2, string[] expected)
+        {
+            var multiset1 = new MultiSet<string>(list);
+            var multiset2 = new MultiSet<string>(list2);
+            var expectedMultiset = new MultiSet<string>(expected);
+
+            multiset1.SymmetricExceptWith(multiset2);
+
+            Assert.IsTrue(multiset1.MultiSetEquals(expectedMultiset));
+        }
+
+
     }
 
 
