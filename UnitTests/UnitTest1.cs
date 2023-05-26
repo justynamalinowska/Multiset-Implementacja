@@ -359,6 +359,47 @@ namespace Tests
             Assert.AreEqual(expected, result);
         }
 
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc", "ddd", "eee" }, true)]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" }, false)]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ddd", "eee" }, false)]
+        public void IsProperSubsetOfForStrings(string[] subset, string[] superset, bool expected)
+        {
+            var subsetMultiset = new MultiSet<string>(subset);
+            var supersetMultiset = new MultiSet<string>(superset);
+
+            var result = subsetMultiset.IsProperSubsetOf(supersetMultiset);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [DataTestMethod]
+        [DataRow(new char[] { 'a', 'b', 'c', 'd', 'e' }, new char[] { 'a', 'b', 'c' }, true)]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'a', 'b', 'c', 'd', 'e' }, false)]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'a', 'b', 'c' }, true)]
+        public void IsSupersetOfForChars(char[] superset, char[] subset, bool expected)
+        {
+            var supersetMultiset = new MultiSet<char>(superset);
+            var subsetMultiset = new MultiSet<char>(subset);
+
+            var result = supersetMultiset.IsSupersetOf(subsetMultiset);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "ccc", "ddd", "eee" }, new string[] { "aaa", "bbb", "ccc" }, true)]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc", "ddd", "eee" }, false)]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" }, true)]
+        public void IsSupersetOfForStrings(string[] superset, string[] subset, bool expected)
+        {
+            var supersetMultiset = new MultiSet<string>(superset);
+            var subsetMultiset = new MultiSet<string>(subset);
+
+            var result = supersetMultiset.IsSupersetOf(subsetMultiset);
+
+            Assert.AreEqual(expected, result);
+        }
     }
 
 
