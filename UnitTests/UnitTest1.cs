@@ -159,5 +159,33 @@ namespace Tests
             Assert.AreEqual(0, set['b']);
             Assert.AreEqual(1, set['c']);
         }
+
+        [DataTestMethod]
+        [DataRow('a', 'b', 'c', 'd')]
+        [DataRow('e', 'f', 'g', 'h')]
+        [DataRow('i', 'j', 'k', 'l')]
+        public void ContainsChars(char ch1, char ch2, char ch3, char ch4)
+        {
+            var list = new List<char> { ch1, ch2, ch3, ch4 };
+            var actual = new MultiSet<char>(list);
+            Assert.AreEqual(actual.Contains(ch1), true);
+            Assert.AreEqual(actual.Contains(ch2), true);
+            Assert.AreEqual(actual.Contains(ch3), true);
+            Assert.AreEqual(actual.Contains(ch4), true);
+        }
+
+        [DataTestMethod]
+        [DataRow("aaa", "bbb", "ccc", "ddd")]
+        [DataRow("aafda", "bdfvsdbb", "ccaffvc", "ddasdcd")]
+        [DataRow("avsdaa", "bczbb", "cdeccc", "ddjnfd")]
+        public void ContainsStrings(string s1, string s2, string s3, string s4)
+        {
+            var list = new List<string> { s1, s2, s3, s4 };
+            var actual = new MultiSet<string>(list);
+            Assert.AreEqual(actual.Contains(s1), true);
+            Assert.AreEqual(actual.Contains(s2), true);
+            Assert.AreEqual(actual.Contains(s3), true);
+            Assert.AreEqual(actual.Contains(s4), true);
+        }
     }
 }
