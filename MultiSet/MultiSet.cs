@@ -103,9 +103,14 @@ namespace km.Collections.MultiZbior
             if (array is null)
                 throw new ArgumentNullException();
 
+            int index = arrayIndex;
             foreach (KeyValuePair<T, int> item in mset)
             {
-                for (int i = 0; i < item.Value; i++) { array[arrayIndex + i] = item.Key; }
+                for (int i = 0; i < item.Value; i++)
+                {
+                    array[index] = item.Key;
+                    index++;
+                }
             }
         }
 
