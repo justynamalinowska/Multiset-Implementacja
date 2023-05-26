@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using System.Diagnostics.Metrics;
 using System.Reflection;
 using km.Collections.MultiZbior;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace Tests
@@ -62,7 +63,7 @@ namespace Tests
             Assert.AreEqual(actual.Contains(s4), true);
         }
     }
-    
+
     [TestClass]
     public class MethodsFromICollection
     {
@@ -210,4 +211,35 @@ namespace Tests
             CollectionAssert.AreEqual(array, newArray);
         }
     }
+
+    [TestClass]
+    public class MethodsFromSetTheory
+    {
+        [DataTestMethod]
+        [DataRow(new char[] { 'b', 'c' }, new char[] { 'a' }, new char[] { 'b', 'c', 'a' })]
+        [DataRow(new char[] { 'b', 'c' }, new char[] { 'a', 'a', 'a' }, new char[] { 'b', 'c', 'a', 'a', 'a' })]
+        public void UnionWithForChars(char[] list, char[] list2, char[] charsUnion)
+        {
+            var list1 = new MultiSet<char>(list);
+            var union = new MultiSet<char>(charsUnion);
+            list1.UnionWith(list2);
+
+            Assert.IsTrue(list1.MultiSetEquals(union));
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa" }, new string[] { "bbb", "bbb" }, new string[] { "aaa", "bbb", "ccc" })]
+        [DataRow(new string[] { }, new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" })]
+        public void UnionWithForStrings(string[] list, string[] list2, string[] charsUnion)
+        {
+            var list1 = new MultiSet<string>(list);
+            var union = new MultiSet<string>(charsUnion);
+            list1.UnionWith(list2);
+
+            Assert.IsTrue(list1.MultiSetEquals(union));
+        }
+
+    }
+
+
 }
