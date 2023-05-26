@@ -239,6 +239,30 @@ namespace Tests
             Assert.IsTrue(list1.MultiSetEquals(union));
         }
 
+        [DataTestMethod]
+        [DataRow(new char[] { 'b', 'c' }, new char[] { 'a', 'b', 'c' }, new char[] { 'b', 'c' })]
+        [DataRow(new char[] { 'a', 'a', 'b', 'c', 'd', 'd' }, new char[] { 'a', 'a', 'a', 'c', 'd' }, new char[] { 'a', 'a', 'c', 'd' })]
+        public void IntersectWithForChars(char[] list, char[] list2, char[] charsIntersection)
+        {
+            var list1 = new MultiSet<char>(list);
+            var intersection = new MultiSet<char>(charsIntersection);
+            list1.IntersectWith(list2);
+
+            Assert.IsTrue(list1.MultiSetEquals(intersection));
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "bbb" }, new string[] { "aaa", "bbb" }, new string[] { "aaa", "bbb" })]
+        [DataRow(new string[] { "aaa", "aaa", "bbb", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" })]
+        public void IntersectWithForStrings(string[] list, string[] list2, string[] stringIntersection)
+        {
+            var list1 = new MultiSet<string>(list);
+            var intersection = new MultiSet<string>(stringIntersection);
+            list1.IntersectWith(list2);
+
+            Assert.IsTrue(list1.MultiSetEquals(intersection));
+        }
+
     }
 
 
