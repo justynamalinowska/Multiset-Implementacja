@@ -211,6 +211,38 @@ namespace Tests
             CollectionAssert.AreEqual(array, newArray);
         }
     }
+    [TestClass]
+    public class MultiSetEquals
+    {
+        [DataTestMethod]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'a', 'b', 'c' }, true)]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'a', 'a', 'b', 'c' }, false)]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'a', 'b' }, false)]
+        public void MultiSetEqualsForChars(char[] set1, char[] set2, bool expected)
+        {
+            var multiset1 = new MultiSet<char>(set1);
+            var multiset2 = new MultiSet<char>(set2);
+
+            var result = multiset1.MultiSetEquals(multiset2);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" }, true)]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "aaa", "bbb", "ccc" }, false)]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb" }, false)]
+        public void MultiSetEqualsForStrings(string[] set1, string[] set2, bool expected)
+        {
+            var multiset1 = new MultiSet<string>(set1);
+            var multiset2 = new MultiSet<string>(set2);
+
+            var result = multiset1.MultiSetEquals(multiset2);
+
+            Assert.AreEqual(expected, result);
+        }
+
+    }
 
     [TestClass]
     public class MethodsFromSetTheory
@@ -429,9 +461,33 @@ namespace Tests
             Assert.AreEqual(expected, result);
         }
 
+        [DataTestMethod]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'd', 'e', 'f' }, false)]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'c', 'd', 'e' }, true)]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'd', 'e', 'f', 'g' }, false)]
+        public void OverlapsForChars(char[] set1, char[] set2, bool expected)
+        {
+            var multiset1 = new MultiSet<char>(set1);
+            var multiset2 = new MultiSet<char>(set2);
 
+            var result = multiset1.Overlaps(multiset2);
 
+            Assert.AreEqual(expected, result);
+        }
 
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "ddd", "eee", "fff" }, false)]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "ccc", "ddd", "eee" }, true)]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "ddd", "eee", "fff", "ggg" }, false)]
+        public void OverlapsForStrings(string[] set1, string[] set2, bool expected)
+        {
+            var multiset1 = new MultiSet<string>(set1);
+            var multiset2 = new MultiSet<string>(set2);
+
+            var result = multiset1.Overlaps(multiset2);
+
+            Assert.AreEqual(expected, result);
+        }
     }
 
 
