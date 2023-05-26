@@ -315,6 +315,36 @@ namespace Tests
             Assert.IsTrue(multiset1.MultiSetEquals(expectedMultiset));
         }
 
+        [DataTestMethod]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'a', 'b', 'c', 'd', 'e' }, true)]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'a', 'b', 'd', 'e' }, false)]
+        [DataRow(new char[] { }, new char[] { 'a', 'b', 'c' }, true)]
+        [DataRow(new char[] { }, new char[] { }, true)]
+        public void IsSubsetOfForChars(char[] subset, char[] superset, bool expected)
+        {
+            var subsetMultiset = new MultiSet<char>(subset);
+            var supersetMultiset = new MultiSet<char>(superset);
+
+            var result = subsetMultiset.IsSubsetOf(supersetMultiset);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc", "ddd", "eee" }, true)]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ddd", "eee" }, false)]
+        [DataRow(new string[] { }, new string[] { "aaa", "bbb", "ccc" }, true)]
+        [DataRow(new string[] { }, new string[] { }, true)]
+        public void IsSubsetOfForStrings(string[] subset, string[] superset, bool expected)
+        {
+            var subsetMultiset = new MultiSet<string>(subset);
+            var supersetMultiset = new MultiSet<string>(superset);
+
+            var result = subsetMultiset.IsSubsetOf(supersetMultiset);
+
+            Assert.AreEqual(expected, result);
+        }
+
 
     }
 
