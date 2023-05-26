@@ -189,8 +189,11 @@ namespace km.Collections.MultiZbior
             else if (IsReadOnly) throw new NotSupportedException();
             MultiSet<T> otherMset = new MultiSet<T>(other);
             foreach (var entry in this)
+            {
                 if (otherMset.Contains(entry)) mset[entry]--;
-
+                if (mset[entry] == 0)
+                    mset.Remove(entry);
+            }
             return this;
         }
 
@@ -200,13 +203,7 @@ namespace km.Collections.MultiZbior
             else if (IsReadOnly) throw new NotSupportedException();
             MultiSet<T> otherMset = new MultiSet<T>(other);
 
-            this.ExceptWith(other);
-            otherMset.ExceptWith(this);
-
-            foreach (var item in other)
-                if (!mset.ContainsKey(item)) mset.Add(item, 1);
-
-            return this;
+            return this.UnionWith(otherMset).ExceptWith(this.IntersectWith(otherMset));
         }
 
         public bool IsSubsetOf(IEnumerable<T> other)
