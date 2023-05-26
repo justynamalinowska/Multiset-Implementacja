@@ -100,5 +100,64 @@ namespace Tests
             var set = new MultiSet<string>(list);
             Assert.AreEqual(set.IsEmpty, false);
         }
+
+        [DataTestMethod]
+        public void AddStrings()
+        {
+            var set = new MultiSet<string>();
+
+            set.Add("aaa");
+            set.Add("aaa");
+            set.Add("bbb");
+
+            Assert.AreEqual(2, set["aaa"]);
+            Assert.AreEqual(1, set["bbb"]);
+        }
+
+        [DataTestMethod]
+        public void AddChars()
+        {
+            var set = new MultiSet<char>();
+
+            set.Add('a');
+            set.Add('a');
+            set.Add('b');
+
+            Assert.AreEqual(2, set['a']);
+            Assert.AreEqual(1, set['b']);
+        }
+
+        [DataTestMethod]
+        public void RemoveStrings()
+        {
+            var list = new List<string> { "aaa", "aaa", "ccc", "bbb" };
+            var set = new MultiSet<string>(list);
+
+            set.Remove("aaa");
+            set.Remove("aaa");
+            set.Remove("bbb");
+
+            Assert.AreEqual(set.Count(), 1);
+            Assert.AreEqual(0, set["aaa"]);
+            Assert.AreEqual(0, set["bbb"]);
+            Assert.AreEqual(1, set["ccc"]);
+        }
+
+
+        [DataTestMethod]
+        public void RemoveChars()
+        {
+            var list = new List<char> { 'a', 'a', 'c', 'd' };
+            var set = new MultiSet<char>(list);
+
+            set.Remove('a');
+            set.Remove('a');
+            set.Remove('d');
+
+            Assert.AreEqual(set.Count(), 1);
+            Assert.AreEqual(0, set['a']);
+            Assert.AreEqual(0, set['b']);
+            Assert.AreEqual(1, set['c']);
+        }
     }
 }
