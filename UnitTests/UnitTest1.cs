@@ -187,5 +187,27 @@ namespace Tests
             Assert.AreEqual(actual.Contains(s3), true);
             Assert.AreEqual(actual.Contains(s4), true);
         }
+
+        [DataTestMethod]
+        [DataRow(new char[] { 'b', 'c' }, 0, new char[] { 'a', 'a', 'a' }, new char[] { 'b', 'c', 'a' })]
+        [DataRow(new char[] { 'b', 'c' }, 1, new char[] { 'a', 'a', 'a' }, new char[] { 'a', 'b', 'c' })]
+        public void CopyToForChars(char[] list, int index, char[] array, char[] newArray)
+        {
+            var actual = new MultiSet<char>(list);
+            actual.CopyTo(array, index);
+
+            CollectionAssert.AreEqual(array, newArray);
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "efg", "kgbs" }, 0, new string[] { "abc", "abc", "abc" }, new string[] { "efg", "kgbs", "abc" })]
+        [DataRow(new string[] { "efg", "kgbs" }, 1, new string[] { "abc", "abc", "abc" }, new string[] { "abc", "efg", "kgbs" })]
+        public void CopyToForStrings(string[] list, int index, string[] array, string[] newArray)
+        {
+            var actual = new MultiSet<string>(list);
+            actual.CopyTo(array, index);
+
+            CollectionAssert.AreEqual(array, newArray);
+        }
     }
 }
