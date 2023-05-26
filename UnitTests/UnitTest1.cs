@@ -211,6 +211,7 @@ namespace Tests
             CollectionAssert.AreEqual(array, newArray);
         }
     }
+
     [TestClass]
     public class MultiSetEquals
     {
@@ -297,7 +298,7 @@ namespace Tests
 
         [DataTestMethod]
         [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'b', 'c' }, new char[] { 'a' })]
-       // [DataRow(new char[] { 'a', 'a', 'b', 'c', 'd', 'd' }, new char[] { 'a', 'c', 'd' }, new char[] { 'a', 'b', 'd' })]
+        [DataRow(new char[] { 'a', 'b', 'c', 'd', 'e' }, new char[] { 'b', 'c' }, new char[] { 'a', 'd', 'e' })]
         public void ExceptWithForChars(char[] list, char[] list2, char[] charsException)
         {
             var list1 = new MultiSet<char>(list);
@@ -490,5 +491,94 @@ namespace Tests
         }
     }
 
+    [TestClass]
+    public class ArithmeticOperator
+    {
+        // Operator +
+        [DataTestMethod]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'b', 'c' }, new char[] { 'a', 'b', 'b', 'c', 'c' })]
+        [DataRow(new char[] { 'a', 'a', 'b', 'c', 'd', 'd' }, new char[] { 'a', 'c', 'd' }, new char[] { 'a', 'a', 'a', 'b', 'c', 'c', 'd', 'd', 'd' })]
+        public void OperatorPlusForChars(char[] set1, char[] set2, char[] expected)
+        {
+            var multiset1 = new MultiSet<char>(set1);
+            var multiset2 = new MultiSet<char>(set2);
+            var expectedMultiset = new MultiSet<char>(expected);
+
+            var result = multiset1 + multiset2;
+
+            Assert.IsTrue(result.MultiSetEquals(expectedMultiset));
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "bbb", "ccc" }, new string[] { "aaa", "bbb", "bbb", "ccc", "ccc" })]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "aaa", "bbb", "bbb", "ccc", "ccc" })]
+        public void OperatorPlusForStrings(string[] set1, string[] set2, string[] expected)
+        {
+            var multiset1 = new MultiSet<string>(set1);
+            var multiset2 = new MultiSet<string>(set2);
+            var expectedMultiset = new MultiSet<string>(expected);
+
+            var result = multiset1 + multiset2;
+
+            Assert.IsTrue(result.MultiSetEquals(expectedMultiset));
+        }
+
+        // Operator -
+        [DataTestMethod]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'b', 'c' }, new char[] { 'a' })]
+        [DataRow(new char[] { 'a', 'a', 'b', 'c', 'd', 'd' }, new char[] { 'a', 'a', 'c', 'd' }, new char[] { 'b', 'd' })]
+        public void OperatorMinusForChars(char[] set1, char[] set2, char[] expected)
+        {
+            var multiset1 = new MultiSet<char>(set1);
+            var multiset2 = new MultiSet<char>(set2);
+            var expectedMultiset = new MultiSet<char>(expected);
+
+            var result = multiset1 - multiset2;
+
+            Assert.IsTrue(result.MultiSetEquals(expectedMultiset));
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "bbb", "ccc" }, new string[] { "aaa" })]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" }, new string[] { })]
+        public void OperatorMinusForStrings(string[] set1, string[] set2, string[] expected)
+        {
+            var multiset1 = new MultiSet<string>(set1);
+            var multiset2 = new MultiSet<string>(set2);
+            var expectedMultiset = new MultiSet<string>(expected);
+
+            var result = multiset1 - multiset2;
+
+            Assert.IsTrue(result.MultiSetEquals(expectedMultiset));
+        }
+
+        [DataTestMethod]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'b', 'c' }, new char[] { 'b', 'c' })]
+        [DataRow(new char[] { 'a', 'a', 'b', 'c', 'd', 'd' }, new char[] { 'a', 'a', 'c', 'd' }, new char[] { 'a', 'a', 'c', 'd' })]
+        public void OperatorMultiplyForChars(char[] set1, char[] set2, char[] expected)
+        {
+            var multiset1 = new MultiSet<char>(set1);
+            var multiset2 = new MultiSet<char>(set2);
+            var expectedMultiset = new MultiSet<char>(expected);
+
+            var result = multiset1 * multiset2;
+
+            Assert.IsTrue(result.MultiSetEquals(expectedMultiset));
+        }
+
+        [DataTestMethod]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "bbb", "ccc" }, new string[] { "bbb", "ccc" })]
+        [DataRow(new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" }, new string[] { "aaa", "bbb", "ccc" })]
+        public void OperatorMultiplyForStrings(string[] set1, string[] set2, string[] expected)
+        {
+            var multiset1 = new MultiSet<string>(set1);
+            var multiset2 = new MultiSet<string>(set2);
+            var expectedMultiset = new MultiSet<string>(expected);
+
+            var result = multiset1 * multiset2;
+
+            Assert.IsTrue(result.MultiSetEquals(expectedMultiset));
+        }
+    }
 
 }
