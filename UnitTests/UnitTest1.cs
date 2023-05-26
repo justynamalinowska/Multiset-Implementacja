@@ -345,6 +345,19 @@ namespace Tests
             Assert.AreEqual(expected, result);
         }
 
+        [DataTestMethod]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'a', 'b', 'c', 'd', 'e' }, true)]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'a', 'b', 'c' }, false)]
+        [DataRow(new char[] { 'a', 'b', 'c' }, new char[] { 'a', 'b', 'd', 'e' }, false)]
+        public void IsProperSubsetOfForChars(char[] subset, char[] superset, bool expected)
+        {
+            var subsetMultiset = new MultiSet<char>(subset);
+            var supersetMultiset = new MultiSet<char>(superset);
+
+            var result = subsetMultiset.IsProperSubsetOf(supersetMultiset);
+
+            Assert.AreEqual(expected, result);
+        }
 
     }
 
