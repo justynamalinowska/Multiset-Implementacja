@@ -188,8 +188,8 @@ namespace km.Collections.MultiZbior
             if (other is null) throw new ArgumentNullException();
             else if (IsReadOnly) throw new NotSupportedException();
             MultiSet<T> otherMset = new MultiSet<T>(other);
-            foreach (var entry in mset)
-                if (otherMset.mset.ContainsKey(entry.Key)) mset[entry.Key]--;
+            foreach (var entry in this)
+                if (otherMset.Contains(entry)) mset[entry]--;
 
             return this;
         }
