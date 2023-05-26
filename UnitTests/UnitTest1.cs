@@ -581,4 +581,60 @@ namespace Tests
         }
     }
 
+    [TestClass]
+    public class MultiSetTests
+    {
+        [TestMethod]
+        public void Indexer()
+        {
+            var set = new MultiSet<char>(new char[] { 'a', 'a', 'b', 'c' });
+
+            int count = set['a'];
+
+            Assert.AreEqual(2, count);
+        }
+
+        [TestMethod]
+        public void IndexerReturnsZero()
+        {
+            var set = new MultiSet<char>(new char[] { 'a', 'a', 'b', 'c' });
+
+            int count = set['d'];
+
+            Assert.AreEqual(0, count);
+        }
+
+        [TestMethod]
+        public void AsDictionary()
+        {
+            var set = new MultiSet<string>(new string[] { "aaa", "bbb", "bbb", "ddd" });
+
+            var dictionary = set.AsDictionary();
+
+            Assert.AreEqual(3, dictionary.Count);
+            Assert.AreEqual(1, dictionary["aaa"]);
+            Assert.AreEqual(2, dictionary["bbb"]);
+            Assert.AreEqual(1, dictionary["ddd"]);
+        }
+
+        [TestMethod]
+        public void AsSet()
+        {
+            var set = new MultiSet<char>(new char[] { 'a', 'b', 'b', 'c', 'd', 'd', 'd' });
+
+            char[] expectedSet = { 'a', 'b', 'c', 'd'};
+
+            CollectionAssert.AreEqual(expectedSet, set.AsSet().ToArray());
+            Assert.AreEqual(4, set.Count());
+        }
+
+        [TestMethod]
+        public void Empty()
+        {
+            var emptySet = MultiSet<char>.Empty;
+
+            Assert.IsNotNull(emptySet);
+            Assert.AreEqual(0, emptySet.Count());
+        }
+    }
 }
