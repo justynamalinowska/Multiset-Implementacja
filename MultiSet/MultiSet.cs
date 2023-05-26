@@ -240,7 +240,7 @@ namespace km.Collections.MultiZbior
         {
             if (other is null) throw new ArgumentNullException();
             this.IntersectWith(other);
-            return this.Count() >= 1;
+            return this.Count() > 0;
         }
 
         public bool MultiSetEquals(IEnumerable<T> other)
